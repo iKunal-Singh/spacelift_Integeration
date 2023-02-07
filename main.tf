@@ -68,7 +68,7 @@ resource "aws_security_group" "mtc_sg" {
 
 resource "aws_key_pair" "aws_auth" {
   key_name   = "mtckey"
-  public_key = file("~/.ssh/mtckey.pub")
+  public_key = file("mtckey.pub")
 }
 
 resource "aws_instance" "dev_node" {
@@ -87,14 +87,14 @@ resource "aws_instance" "dev_node" {
     Name = "dev-node"
   }
 
-  provisioner "local-exec" {
-    command = templatefile("${var.host_os}-ssh-config.tpl", {
-      hostname     = self.public_ip,
-      user         = "ubuntu",
-      identityfile = "~/.ssh/mtckey"
-    })
-    interpreter = var.host_os == "linux" ? ["bash", "-c"] : ["Powershell", "-command"]
-  }
+#  provisioner "local-exec" {
+#    command = templatefile("${var.host_os}-ssh-config.tpl", {
+#      hostname     = self.public_ip,
+#      user         = "ubuntu",
+#      identityfile = "~/.ssh/mtckey"
+#    })
+#    interpreter = var.host_os == "linux" ? ["bash", "-c"] : ["Powershell", "-command"]
+#  }
 
 
 }
